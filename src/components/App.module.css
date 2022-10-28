@@ -1,0 +1,33 @@
+label {
+    /* display: block; */
+}
+    .textUp {
+        margin-top: 10px;
+    }
+
+input {
+    height: 20px;
+    margin-left: 10px;
+}
+button {
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 10%;
+    /* display: flex; */
+}
+
+.boxUp {
+    display: flex;
+    flex-direction: column;
+    border: 1mm solid gray;
+    padding: 10px;
+}
+.boxInput {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.textDown {
+    margin-top: 20px;
+}
