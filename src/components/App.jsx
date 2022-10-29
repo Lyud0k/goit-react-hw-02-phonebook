@@ -2,45 +2,60 @@
 import css from 'components/App.module.css';
 import React from 'react';
 import { nanoid } from 'nanoid';
+// import { ContactForm } from './ContactForm/ContactForm';
+// import { Filter } from './Filter/Filter';
+// import { ContactList } from './ContactList/ContactList';
+
 export class App extends React.Component {
   state = {
     contacts: [],
+    filter: '',
     name: '',
     number: '',
   };
-
-  proverka = evt => {
-    this.setState({ name: evt.target.value });
-    // this.setState({ number: evt.target.value });
-    // this.setState({
-    //   contacts: [...this.state.contacts, this.state.name],
-    // });
-  };
-  numberValue = evt => {
-    this.setState({ number: evt.target.value });
-  };
-  clickPr = () => {
-    this.setState({
-      contacts: [...this.state.contacts, this.state.name, this.state.number],
-    });
-    // this.setState({ contacts: [...this.state.contacts, this.state.number] });
-  };
-
-  // reset = () => {
-  //   this.setState({ contacts: [], name: '', value: '' });
-  // };
 
   formSubmit = evt => {
     evt.preventDefault();
     console.log(this.state);
     // this.reset();
   };
+
+  proverka = evt => {
+    this.setState({ name: evt.target.value });
+    // this.setState({ number: evt.target.value });
+  };
+
+  numberValue = evt => {
+    this.setState({ number: evt.target.value });
+  };
+
+  clickPr = () => {
+    this.setState({
+      contacts: [
+        ...this.state.contacts,
+        { name: this.state.name, number: this.state.number },
+      ],
+    });
+  };
+
+  findContacts = evt => {
+    this.setState({
+      filter: evt.target.value,
+    });
+  };
+
+  viewList = () =>
+    this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
+
+  // this.setState({ contacts: [...this.state.contacts, this.state.number] });
+
+  // reset = () => {
+  //   this.setState({ contacts: [], name: '', value: '' });
+  // };
+
   render() {
-    // const tel = (
-    //   <p>
-    //     {this.state.name}:{this.state.number}
-    //   </p>
-    // );
     return (
       <div
         style={{
@@ -52,6 +67,15 @@ export class App extends React.Component {
           color: '#010101',
         }}
       >
+        {/* <div className={css.boxAll}>
+          <h1 className={css.textUp}>Phonebook</h1>
+          <ContactForm />
+
+          <h2 className={css.textDown}>Contacts</h2>
+          <Filter />
+          <ContactList />
+        </div> */}
+
         <div className={css.boxAll}>
           <form onSubmit={this.formSubmit}>
             <div className={css.boxUp}>
@@ -63,7 +87,6 @@ export class App extends React.Component {
                     name="name"
                     onChange={this.proverka}
                     type="text"
-                    // name={this.state.name}
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                     required
@@ -85,21 +108,31 @@ export class App extends React.Component {
                 </button>
               </div>
             </div>
-            <h2 className={css.textDown}>Contacts</h2>
-            <ul>
-              {this.state.contacts.map(name => {
-                // const ne = <p>{contact}:</p>;
-                // const te = <p>{contact}</p>;
-                // const teg = <p>{contact}</p>;
-                console.log(this.state.contacts);
-                return (
-                  <li key={nanoid()}>
-                    {name}
-                    {/* {teg} */}
-                  </li>
-                );
-              })}
-            </ul>
+
+            <div className={css.boxDown}>
+              <h2 className={css.textDown}>Contacts</h2>
+              <p>Find contacts by name:</p>
+              <input
+                name={this.state.filter}
+                onChange={this.findContacts}
+                type="text"
+                // name={this.state.name}
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              />
+
+              <ul>
+                {this.viewList().map(({ name, number }) => {
+                  // console.log(viewList);
+                  return (
+                    <li key={nanoid()}>
+                      <span>{name}:</span>
+                      <span> {number}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </form>
         </div>
       </div>
