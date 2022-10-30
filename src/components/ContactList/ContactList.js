@@ -11,24 +11,26 @@ export class ContactList extends React.Component {
     number: '',
     }
 
-      viewList = () =>
+
+  viewList = () =>
     this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
 
+
     render() {
         return (
-                      <ul>
-            {this.viewList().map(({ name, number }) => {
-              // console.log(viewList);
-              return (
-                <li key={nanoid()}>
-                  <span>{name}:</span>
-                  <span> {number}</span>
-                </li>
-              );
-            })}
-          </ul>
+            <ul>
+              {this.viewList().map(({ name, number }) => {
+                // console.log(viewList);
+                return (
+                  <li key={nanoid()}>
+                    <span>{name}:</span>
+                    <span> {number}</span>
+                  </li>
+                );
+              })}
+            </ul>
         )
     }
 }

@@ -3,26 +3,22 @@ import React from 'react';
 
 export class ContactForm extends React.Component {
     state = {
-        contacts: [],
+    contacts: [],
+    // filter: '',
     name: '',
     number: '',
     }
 
-      formSubmit = evt => {
-    evt.preventDefault();
-    console.log(this.state);
-    // this.reset();
-    };
-    
-    
+
   proverka = evt => {
     this.setState({ name: evt.target.value });
     // this.setState({ number: evt.target.value });
-    };
-    
-      numberValue = evt => {
+  };
+
+  numberValue = evt => {
     this.setState({ number: evt.target.value });
   };
+
   clickPr = () => {
     this.setState({
       contacts: [
@@ -30,19 +26,24 @@ export class ContactForm extends React.Component {
         { name: this.state.name, number: this.state.number },
       ],
     });
-    // this.setState({ contacts: [...this.state.contacts, this.state.number] });
+    this.props.onClick(this.state);
   };
 
+    formSubmit = evt => {
+    evt.preventDefault();
+    this.props.onSubmit(this.state);
+    // this.reset();
+  };
+ 
     render() {
-        return (
-                      <form onSubmit={this.formSubmit}>
-            <div className={css.boxUp}>
-              {/* <h2 className={css.textUp}>Phonebook</h2> */}
-              <div className={css.boxInput}>
+      return (
+          
+          <div className={css.boxInput}>
+            <form onSubmit={this.formSubmit}>
                 <label htmlFor="">
                   Name:
                   <input
-                    name="name"
+                    name="name" 
                     onChange={this.proverka}
                     type="text"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -60,13 +61,14 @@ export class ContactForm extends React.Component {
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                     required
                   />
-                </label>
+            </label>
+          
                 <button type="submit" onClick={this.clickPr}>
                   Add contact
-                </button>
-              </div>
-                </div>
-                </form>
+            </button>
+           </form>
+          </div>
+          
         )
     }
 }
