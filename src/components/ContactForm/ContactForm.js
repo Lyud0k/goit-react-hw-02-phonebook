@@ -11,39 +11,48 @@ export class ContactForm extends React.Component {
 
 
   proverka = evt => {
-    this.setState({ name: evt.target.value });
+    const { name, value } = evt.currentTarget
+    this.setState({ [name]: value });
+    // console.log([evt.target.name]);
+    // console.log(evt.target.value);
+    // console.log(evt.target);
+    // this.setState({ name: evt.target.value });
     // this.setState({ number: evt.target.value });
   };
 
-  numberValue = evt => {
-    this.setState({ number: evt.target.value });
-  };
+  // numberValue = evt => {
+  //   this.setState({ number: evt.target.value });
+  // };
 
-  clickPr = () => {
-    this.setState({
-      contacts: [
-        ...this.state.contacts,
-        { name: this.state.name, number: this.state.number },
-      ],
-    });
-    this.props.onClick(this.state);
-  };
+  // clickPr = () => {
+  //   this.setState({
+  //     contacts: [
+  //       ...this.state.contacts,
+  //       { name: this.state.name, number: this.state.number },
+  //     ],
+  //   });
+  //   this.props.onClick(this.state);
+  // };
 
     formSubmit = evt => {
     evt.preventDefault();
     this.props.onSubmit(this.state);
-    // this.reset();
+    this.reset();
   };
+  reset = () => {
+    this.setState({name: '', number: ''})
+  }
  
     render() {
       return (
           
           <div className={css.boxInput}>
-            <form onSubmit={this.formSubmit}>
+            <form className={css.formBox} onSubmit={this.formSubmit}>
                 <label htmlFor="">
                   Name:
                   <input
-                    name="name" 
+                name="name" 
+                value={this.state.name}
                     onChange={this.proverka}
                     type="text"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -54,8 +63,9 @@ export class ContactForm extends React.Component {
                 <label htmlFor="">
                   Number:
                   <input
-                    type="tel"
-                    onChange={this.numberValue}
+                type="tel"
+                value={this.state.number}
+                    onChange={this.proverka}
                     name="number"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
@@ -63,7 +73,7 @@ export class ContactForm extends React.Component {
                   />
             </label>
           
-                <button type="submit" onClick={this.clickPr}>
+                <button className={css.clickInput} type="submit">
                   Add contact
             </button>
            </form>

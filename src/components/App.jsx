@@ -3,15 +3,20 @@ import css from 'components/App.module.css';
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
-// import { Filter } from './Filter/Filter';
-// import { ContactList } from './ContactList/ContactList';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './ContactList/ContactList';
 
 export class App extends React.Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
-    name: '',
-    number: '',
+    // name: '',
+    // number: '',
   };
 
   // formSubmit = evt => {
@@ -20,26 +25,41 @@ export class App extends React.Component {
   //   this.reset();
   // };
 
-  moveSubmit = data => {
-    console.log(data);
-  };
+  // moveSubmit = data => {
+  //   console.log(data);
+  // };
 
-  proverka = evt => {
-    this.setState({ name: evt.target.value });
-    // this.setState({ number: evt.target.value });
-  };
+  // proverka = evt => {
+  //   this.setState({ name: evt.target.value });
+  //   // this.setState({ number: evt.target.value });
+  // };
 
-  numberValue = evt => {
-    this.setState({ number: evt.target.value });
-  };
+  // numberValue = evt => {
+  //   this.setState({ number: evt.target.value });
+  // };
 
-  clickPr = () => {
-    this.setState({
-      contacts: [
-        ...this.state.contacts,
-        { name: this.state.name, number: this.state.number },
-      ],
+  sameName = name => {
+    return this.state.contacts.find(contact => {
+      return contact.name.toLowerCase() === name.toLowerCase();
     });
+  };
+
+  clickPr = ({ name, number }) => {
+    const id = nanoid();
+    console.log(name);
+    console.log(this.state.contacts);
+    console.log(this.sameName(name));
+    if (this.sameName(name)) {
+      alert(`${name} is olready in contacts`);
+    } else {
+      this.setState({
+        contacts: [...this.state.contacts, { id, name, number }],
+        // contacts: [
+        //   ...this.state.contacts,
+        //   { name: this.state.name, number: this.state.number },
+        // ],
+      });
+    }
   };
 
   findContacts = evt => {
@@ -53,8 +73,10 @@ export class App extends React.Component {
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   render() {
@@ -79,34 +101,16 @@ export class App extends React.Component {
 </div> */}
 
         <div className={css.boxAll}>
-          <div className={css.boxUp}>
-            <h1 className={css.textUp}>Phonebook</h1>
-            <ContactForm onSubmit={this.moveSubmit} onClick={this.viewList} />
-          </div>
+          <h1 className={css.textUp}>Phonebook</h1>
+          <ContactForm onSubmit={this.clickPr} />
 
-          <div className={css.boxDown}>
-            <h2 className={css.textDown}>Contacts</h2>
-            <p>Find contacts by name:</p>
-            <input
-              name={this.state.filter}
-              onChange={this.findContacts}
-              type="text"
-              // name={this.state.name}
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            />
-          </div>
-          <ul>
-            {this.viewList().map(({ name, number }) => {
-              // console.log(viewList);
-              return (
-                <li key={nanoid()}>
-                  <span>{name}:</span>
-                  <span> {number}</span>
-                </li>
-              );
-            })}
-          </ul>
+          <h2 className={css.textDown}>Contacts</h2>
+          <Filter filter={this.state.filter} onChange={this.findContacts} />
+
+          <ContactList
+            contact={this.viewList()}
+            deleteList={this.deleteContact}
+          />
         </div>
       </div>
     );

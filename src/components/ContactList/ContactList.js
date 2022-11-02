@@ -1,36 +1,20 @@
 import css from 'components/ContactList/ContactList.module.css';
 import React from 'react';
 import { render } from '@testing-library/react';
-import { nanoid } from 'nanoid';
-
-export class ContactList extends React.Component {
-    state = {
-    contacts: [],
-    filter: '',
-    name: '',
-    number: '',
-    }
 
 
-  viewList = () =>
-    this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
-    );
+export const ContactList =({contact, deleteList}) => (
 
-
-    render() {
-        return (
-            <ul>
-              {this.viewList().map(({ name, number }) => {
+            <ol>
+              {contact.map(({id, name, number }) => {
                 // console.log(viewList);
                 return (
-                  <li key={nanoid()}>
-                    <span>{name}:</span>
+                  <li className={css.list} key={id}>
+                    <span>{name}: </span>
                     <span> {number}</span>
+                    <button className={css.clickDel} type="button" onClick={() => deleteList(id)}>Delete</button>
                   </li>
                 );
               })}
-            </ul>
-        )
-    }
-}
+            </ol>
+)
