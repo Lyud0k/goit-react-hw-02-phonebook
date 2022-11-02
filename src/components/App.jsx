@@ -15,28 +15,7 @@ export class App extends React.Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    // name: '',
-    // number: '',
   };
-
-  // formSubmit = evt => {
-  //   evt.preventDefault();
-  //   console.log(this.state);
-  //   this.reset();
-  // };
-
-  // moveSubmit = data => {
-  //   console.log(data);
-  // };
-
-  // proverka = evt => {
-  //   this.setState({ name: evt.target.value });
-  //   // this.setState({ number: evt.target.value });
-  // };
-
-  // numberValue = evt => {
-  //   this.setState({ number: evt.target.value });
-  // };
 
   sameName = name => {
     return this.state.contacts.find(contact => {
@@ -91,15 +70,6 @@ export class App extends React.Component {
           color: '#010101',
         }}
       >
-        {/* <div>
-  <h1>Phonebook</h1>
-  <ContactForm ... />
-
-  <h2>Contacts</h2>
-  <Filter ... />
-  <ContactList ... />
-</div> */}
-
         <div className={css.boxAll}>
           <h1 className={css.textUp}>Phonebook</h1>
           <ContactForm onSubmit={this.clickPr} />

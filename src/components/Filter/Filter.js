@@ -1,5 +1,6 @@
 import css from 'components/Filter/Filter.module.css';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const Filter = ({filter, onChange}) => (
  
@@ -15,3 +16,8 @@ export const Filter = ({filter, onChange}) => (
                 </div>
         
     )
+
+Filter.protoType = {
+  filter: PropTypes.string,
+  onChange: PropTypes.func,
+    }

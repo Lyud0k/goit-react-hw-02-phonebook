@@ -1,7 +1,6 @@
 import css from 'components/ContactList/ContactList.module.css';
 import React from 'react';
-import { render } from '@testing-library/react';
-
+import PropTypes from 'prop-types';
 
 export const ContactList =({contact, deleteList}) => (
 
@@ -18,3 +17,12 @@ export const ContactList =({contact, deleteList}) => (
               })}
             </ol>
 )
+ContactList.protoType = {
+  contact: PropTypes.arrayOf(
+    PropTypes.shape({
+      id:  PropTypes.number,
+      name:  PropTypes.string,
+      number:  PropTypes.number,
+    })
+  )
+}

@@ -1,6 +1,7 @@
 import css from 'components/ContactForm/ContactForm.module.css';
 import React from 'react';
 
+
 export class ContactForm extends React.Component {
     state = {
     contacts: [],
@@ -82,3 +83,4 @@ export class ContactForm extends React.Component {
         )
     }
 }
+
